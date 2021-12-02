@@ -3,11 +3,8 @@ fn main() {
     let directions = raw_input
         .lines()
         .map(|l| {
-            let mut chunks = l.split(' ');
-            return (
-                chunks.next().unwrap(),
-                chunks.next().unwrap().parse::<usize>().unwrap(),
-            );
+            let (dir, dist) = l.split_once(' ').unwrap();
+            (dir, dist.parse::<i32>().unwrap())
         })
         .collect::<Vec<_>>();
 
@@ -29,5 +26,5 @@ fn main() {
             &"up" => (x, y, a - dist),
             _ => panic!("Unknown direction!"),
         });
-    println!("Part1: {}", pos2.0 * pos2.1);
+    println!("Part2: {}", pos2.0 * pos2.1);
 }
