@@ -37,7 +37,6 @@ fn get_low_points(map: &HashMap<(i32, i32), i32>) -> Vec<(i32, i32)> {
 }
 
 fn get_basin_size(map: &HashMap<(i32, i32), i32>, pos: (i32, i32)) -> i32 {
-fn get_basin_size(map: &HashMap<(i32, i32), i32>, pos: (i32, i32)) -> i32 {
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
     let mut queue: Vec<(i32, i32)> = Vec::new();
     queue.push(pos);
@@ -50,10 +49,8 @@ fn get_basin_size(map: &HashMap<(i32, i32), i32>, pos: (i32, i32)) -> i32 {
         let neighbors = get_neighbors(map, current);
         let crt_val = map.get(&current).unwrap();
         neighbors.iter().for_each(|n| {
-            if !visited.contains(n)
-                && map.get(n).unwrap() < &9
-                && map.get(n).unwrap() >= crt_val
-            {
+            let v = map.get(&n).unwrap();
+            if !visited.contains(n) && v < &9 && v >= crt_val {
                 queue.push(*n);
             }
         });
@@ -69,9 +66,11 @@ fn get_risc_levels(map: &HashMap<(i32, i32), i32>) -> i32 {
 }
 
 fn get_largest_basins(map: &HashMap<(i32, i32), i32>) -> i64 {
-    let mut basins_sizes: Vec<i32> = get_low_points(map).iter().map(|pos| get_basin_size(map, *pos)).collect();
+    let mut basins_sizes: Vec<i32> = get_low_points(map)
+        .iter()
+        .map(|pos| get_basin_size(map, *pos))
+        .collect();
     basins_sizes.sort();
-    println!("{:?}", basins_sizes);
     basins_sizes
         .iter()
         .rev()
@@ -83,7 +82,7 @@ fn main() {
     let input = include_str!("input");
     let map = parse_input(input);
     println!("Part1: {}", get_risc_levels(&map));
-    print!("Part2: {}", get_largest_basins(&map));
+    println!("Part2: {}", get_largest_basins(&map));
 }
 
 #[cfg(test)]
