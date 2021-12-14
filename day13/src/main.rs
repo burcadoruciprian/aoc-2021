@@ -13,8 +13,8 @@ fn parse_input(input: &str) -> (HashSet<(i32, i32)>, Vec<(char, i32)>) {
         if line.starts_with("fold") {
             let caps = i_re.captures(line).unwrap();
             instructions.push((
-                caps.get(1).unwrap().as_str().chars().next().unwrap(),
-                caps.get(2).unwrap().as_str().parse::<i32>().unwrap(),
+                caps[1].chars().next().unwrap(),
+                caps[2].parse::<i32>().unwrap(),
             ));
         } else {
             let caps = c_re.captures(line).unwrap();
